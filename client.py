@@ -40,9 +40,13 @@ except socket.error:
 
 print 'Recibido -- ', data
 
-if METODO == "INVITE":
-	LINE = "ACK " + " sip:" + SPLIT_PORT[0] + ' SIP/2.0\r\n\r\n'
+data_troz = data.split('\r\n\r\n')
+
+if METODO == "INVITE" and data_troz[2] == 'SIP/2.0 200 OK':
+	LINE = "ACK" + " sip:" + SPLIT_PORT[0] + ' SIP/2.0\r\n\r\n'
 	print "Enviando: " + LINE
+	my_socket.send(LINE)
+	data = my_socket.recv(1024)
 
 
 print "Terminando socket..."
