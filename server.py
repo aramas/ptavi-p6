@@ -14,6 +14,7 @@ if len(entrada) != 4:
     raise SystemExit
 IP = int(entrada[2])
 
+
 class EchoHandler(SocketServer.DatagramRequestHandler):
     """
     Echo server class
@@ -33,7 +34,7 @@ class EchoHandler(SocketServer.DatagramRequestHandler):
             print "El cliente nos manda " + line
             if metodo == "INVITE":
                 Mensaje = 'SIP/2.0 100 Trying\r\n\r\n'
-		Mensaje += 'SIP/2.0 180 Ring\r\n\r\n'
+                Mensaje += 'SIP/2.0 180 Ring\r\n\r\n'
                 Mensaje += 'SIP/2.0 200 OK\r\n\r\n'
                 print "Enviando: " + Mensaje
                 self.wfile.write(Mensaje)
