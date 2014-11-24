@@ -26,27 +26,27 @@ IP = SPLIT_NOMBRE[1]
 # Contenido que vamos a enviar
 LINE = METODO + " sip:" + SPLIT_PORT[0] + ' SIP/2.0\r\n\r\n'
 
-	# Creamos el socket, lo configuramos y lo atamos a un servidor/puerto
+# Creamos el socket, lo configuramos y lo atamos a un servidor/puerto
 my_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 my_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 my_socket.connect((IP, int(PORT)))
 try:
         my_socket.send(LINE)
-	data = my_socket.recv(1024)
+        data = my_socket.recv(1024)
         print "Enviando: " + LINE
 except socket.error:
         print "Error: No server listening at " + IP + " port " + PORT
-	raise SystemExit
+        raise SystemExit
 
 print 'Recibido -- ', data
 
 data_troz = data.split('\r\n\r\n')
 
 if METODO == "INVITE" and data_troz[2] == 'SIP/2.0 200 OK':
-	LINE = "ACK" + " sip:" + SPLIT_PORT[0] + ' SIP/2.0\r\n\r\n'
-	print "Enviando: " + LINE
-	my_socket.send(LINE)
-	data = my_socket.recv(1024)
+        LINE = "ACK" + " sip:" + SPLIT_PORT[0] + ' SIP/2.0\r\n\r\n'
+        print "Enviando: " + LINE
+        my_socket.send(LINE)
+        data = my_socket.recv(1024)
 
 
 print "Terminando socket..."
